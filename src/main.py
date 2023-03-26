@@ -1,3 +1,5 @@
+import time
+
 import osbrain
 from osbrain import run_agent
 from osbrain import run_nameserver
@@ -11,6 +13,11 @@ if __name__ == '__main__':
     # Запуск системы
     server = run_nameserver()
     # Запуск супервайзера
-    agent = run_agent("Supervisor", base=Supervisor)
+    agent = run_agent("Supervisor", base=Supervisor, safe=False)
+
+    time.sleep(20)
+    print("Вот они слева на право: ")
+    for alias in server.agents():
+        print(alias)
     # Отключаем систему
-    server.shutdown()
+    server.shutdown(200)

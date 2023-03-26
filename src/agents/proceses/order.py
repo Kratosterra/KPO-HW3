@@ -25,6 +25,7 @@ class Order(Agent):
         super().on_init()
         self.docs = Documents()
         self.docs.get_all_documents()
+        self.log_info("Я родился!")
 
     def on_message_from_manager(self, message):
         """
@@ -53,4 +54,5 @@ class Order(Agent):
         pass
 
     def is_possible(self):
+        print(self.vis_ord_dishes)
         return self.is_possible

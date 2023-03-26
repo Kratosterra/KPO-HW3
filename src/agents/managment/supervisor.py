@@ -1,4 +1,5 @@
 import ast
+import time
 
 from agents.managment.working_documents import Documents
 from agents.performers.cooker import Cooker
@@ -156,5 +157,5 @@ class Supervisor(Agent):
         Создать новый заказ.
         :param order: Заказ в виде обычного представления в виде листа
         """
-        # order = run_agent("")
+        ord = run_agent(f"Order:{name_visitor_agent[8:]}", base=Order, safe=False)
         pass
