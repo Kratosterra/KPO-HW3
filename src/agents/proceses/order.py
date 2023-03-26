@@ -23,15 +23,17 @@ class Order(Agent):
 
     def on_init(self):
         super().on_init()
+        self.bind('PUSH', alias=str(self.name))
         self.docs = Documents()
         self.docs.get_all_documents()
         self.log_info("Я родился!")
 
-    def on_message_from_manager(self, message):
+    def on_reply_from_supervisor(self, message):
         """
         Принимает и обрабатывает сообщения от управляющего агента.
         :param message: Сообщение от управляющего агента
         """
+        self.log_info(f"Получил от менеджера: {message}")
         pass
 
     def send_message_to_visitor(self):
@@ -53,6 +55,10 @@ class Order(Agent):
         """
         pass
 
+    def start_execution(self):
+        self.log_info(f"Начинаю создание блюд, процессов и операций по технологическим картам {self.vis_ord_dishes}")
+
+        pass
+
     def is_possible(self):
-        print(self.vis_ord_dishes)
         return self.is_possible

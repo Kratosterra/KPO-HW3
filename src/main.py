@@ -16,7 +16,7 @@ if __name__ == '__main__':
     agent = run_agent("Supervisor", base=Supervisor, safe=False)
 
     time.sleep(20)
-    print("Вот они слева на право: ")
+    print("Это наши герои слева(сверху) на право(вниз): ")
     for alias in server.agents():
         print(alias)
     # Отключаем систему

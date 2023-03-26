@@ -46,6 +46,7 @@ class Supervisor(Agent):
         self.docs.get_all_documents()
         # Обявляем наличие подписочных сообщений
         self.bind('SYNC_PUB', alias='supervisor', handler=self.on_message)
+        self.bind('SYNC_PUB', alias='supervisor_orders', handler=self.on_message)
         # Начинаем день
         self.start_day()
 
@@ -130,8 +131,8 @@ class Supervisor(Agent):
         else:
             self.send(self.addr('supervisor'), f"{command_list[1]} Команда не распознана!")
 
-    def on_message_from_cooker(self, message):
-        self.log_info('Получил от повара: %s' % message)
+    def on_message_from_order(self, message):
+        self.log_info('Получил от заказа: %s' % message)
 
     def on_message_from_equipment(self, message):
         self.log_info('Получил от оборудования: %s' % message)
@@ -157,5 +158,13 @@ class Supervisor(Agent):
         Создать новый заказ.
         :param order: Заказ в виде обычного представления в виде листа
         """
+        self.log_info("Создаю заказ!")
         ord = run_agent(f"Order:{name_visitor_agent[8:]}", base=Order, safe=False)
+        ord.set_attr(vis_ord_dishes=order)
+        self.connect(ord.addr(str(ord.get_attr('name'))), handler=self.on_message_from_order)
+        ord.connect(self.addr('supervisor_orders'), handler='on_reply_from_supervisor')
+        self.log_info("Подключил заказ к информационной системе!")
+        self.log_info("Приказываю заказу начать исполнение!")
+        ord.start_execution()
+        self.orders[f"Order:{name_visitor_agent[8:]}"] = ord
         pass
