@@ -1,7 +1,7 @@
+import json
+
 from agents.managment.working_documents import Documents
 from osbrain import Agent
-import json
-import os
 
 
 class Storage(Agent):

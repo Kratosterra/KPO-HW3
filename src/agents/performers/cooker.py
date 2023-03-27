@@ -38,25 +38,3 @@ class Cooker(Agent):
                 self.cook_name = cooker["cook_name"]
                 self.cook_active = cooker["cook_active"]
         self.log_info(f"Я, id:{self.cook_id} {self.cook_name}, прибыл на работу в состоянии {self.cook_active}!")
-
-    def add_new_task(self, operation):
-        """
-        Назначает новую задачу повару
-        :param operation: операция, которая будет назначена
-        :return: True если операция была назначена, False если повар занят.
-        """
-        pass
-
-    def cancel_task(self):
-        """
-        Отменяет задачу
-        :return: True если задача отменена и False если задача не выполняется в связи с простоем
-        """
-        pass
-
-    def get_status_of_task(self):
-        """
-        Возвращает статус выполнения операции
-        :return: Строку статуса.
-        """
-        pass

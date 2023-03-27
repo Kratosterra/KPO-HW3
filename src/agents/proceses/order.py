@@ -1,7 +1,6 @@
 from agents.managment.working_documents import Documents
-from osbrain import Agent, run_agent
-
 from agents.proceses.dish import Dish
+from osbrain import Agent, run_agent
 
 
 class Order(Agent):
@@ -43,25 +42,6 @@ class Order(Agent):
         :param message: Сообщение от управляющего агента
         """
         self.log_info(f"Получил от менеджера: {message}")
-        pass
-
-    def send_message_to_visitor(self):
-        """
-        Отправляет агенту посетителя информацию о времени ожидания его заказа.
-        """
-        pass
-
-    def ask_for_time_of_waiting(self):
-        """
-        «Просит» агентов процесса предоставить оценку времени ожидания.
-        """
-        pass
-
-    def on_get_answer_from_process(self, answer):
-        """
-        Обрабатывает ответ от агентов процессов о времени ожидания готовности блюд / напитков.
-        :param answer: Ответ от процессов
-        """
         pass
 
     def start_execution(self):

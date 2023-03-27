@@ -14,8 +14,9 @@ if __name__ == '__main__':
     server = run_nameserver()
     # Запуск супервайзера
     agent = run_agent("Supervisor", base=Supervisor, safe=False)
-    time.sleep(10)
-    agent.log_info("Мы завершили все, расходимся, ребятки!")
+    # Подождем пока асинхронка сделает свое дело
+    time.sleep(6)
+    agent.log_info("Мы завершили все, расходимся, ребятки! Проверьте ваши логи)")
     time.sleep(2)
     # Отключаем систему
     server.shutdown(200)

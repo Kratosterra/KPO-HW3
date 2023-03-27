@@ -35,4 +35,3 @@ class Product(Agent):
 
     def __init__(self, name='', host=None, serializer=None, transport=None, attributes=None):
         super().__init__(name, host, serializer, transport, attributes)
-
