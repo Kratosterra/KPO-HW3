@@ -37,6 +37,9 @@ class Process(Agent):
                  transport=None, attributes=None):
         super().__init__(name, host, serializer, transport, attributes)
 
+    def on_init(self):
+        super().on_init()
+        self.log_info(f"Приветики, я тут попроцесирую!")
 
     def execute_operations(self):
         """

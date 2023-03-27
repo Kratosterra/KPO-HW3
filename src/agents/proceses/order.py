@@ -1,5 +1,7 @@
 from agents.managment.working_documents import Documents
-from osbrain import Agent
+from osbrain import Agent, run_agent
+
+from agents.proceses.dish import Dish
 
 
 class Order(Agent):
@@ -11,10 +13,14 @@ class Order(Agent):
     """
 
     docs = ""
+    # Кому принадлижит заказ
+    visitor_name = ""
     # Массив блюд
     vis_ord_dishes = []
     # Примерное время ожидания
     time_of_waiting = 0
+    # Блюда
+    dish_agents = []
     # Возможен ли заказ
     is_possible = False
 
@@ -56,8 +62,15 @@ class Order(Agent):
         pass
 
     def start_execution(self):
-        self.log_info(f"Начинаю создание блюд, процессов и операций по технологическим картам {self.vis_ord_dishes}")
-
+        self.log_info(f"Начинаю создание блюд по технологическим картам {self.vis_ord_dishes}")
+        num_of_dish = 1
+        for dish_card in self.vis_ord_dishes:
+            dish = run_agent(f"Dish:{self.visitor_name[8:]}:{num_of_dish}", base=Dish)
+            dish.set_attr(dish_card=dish_card)
+            self.dish_agents.append(dish)
+            num_of_dish += 1
+        for dish in self.dish_agents:
+            dish.start_execution()
         pass
 
     def is_possible(self):

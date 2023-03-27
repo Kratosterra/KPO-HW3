@@ -1,5 +1,4 @@
 import ast
-import time
 
 from agents.managment.working_documents import Documents
 from agents.performers.cooker import Cooker
@@ -144,7 +143,6 @@ class Supervisor(Agent):
         self.storage_agent.kill()
         for agent in self.cook_agents:
             agent.kill()
-
         for agent in self.equipment_agents:
             agent.kill()
         for agent in self.visitor_agents:
@@ -156,11 +154,13 @@ class Supervisor(Agent):
     def create_new_order(self, name_visitor_agent, order: list):
         """
         Создать новый заказ.
+        :param name_visitor_agent: Имя посетителя агента, заказавшего блюдо
         :param order: Заказ в виде обычного представления в виде листа
         """
         self.log_info("Создаю заказ!")
         ord = run_agent(f"Order:{name_visitor_agent[8:]}", base=Order, safe=False)
         ord.set_attr(vis_ord_dishes=order)
+        ord.set_attr(visitor_name=name_visitor_agent)
         self.connect(ord.addr(str(ord.get_attr('name'))), handler=self.on_message_from_order)
         ord.connect(self.addr('supervisor_orders'), handler='on_reply_from_supervisor')
         self.log_info("Подключил заказ к информационной системе!")

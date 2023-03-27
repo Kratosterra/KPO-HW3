@@ -1,5 +1,8 @@
-from osbrain import Agent
+from osbrain import Agent, run_agent
 
+from agents.managment.working_documents import Documents
+
+from agents.proceses.process import Process
 
 class Dish(Agent):
     """
@@ -8,6 +11,8 @@ class Dish(Agent):
     Уничтожается, когда данное блюдо / напиток приготовлено, а заказ выполнен.
     """
 
+    # Документы
+    docs = ""
     # ID блюда по технологической карте
     card_id = 0
     # Название блюда
@@ -16,23 +21,32 @@ class Dish(Agent):
     card_descr = ""
     # Время, затрачиваемое по технологической карте на блюдо
     card_time = 0.0
-    # Тип оборудования используемый поварами
-    equip_type = 0
-    # Операции для создания блюда
-    operations = []
-    # Продукты для создания блюда
-    products = []
     # Завершено ли создание блюда
     is_completed = False
+    dish_card = dict()
 
-    def __init__(self, id_card, name_dish, description, time_card, type_equip, name='', host=None,
+    def __init__(self, name='', host=None,
                  serializer=None, transport=None, attributes=None):
         super().__init__(name, host, serializer, transport, attributes)
-        card_id = id_card
-        dish_name = name_dish
-        card_descr = description
-        card_time = time_card
-        equip_type = type_equip
+
+    def on_init(self):
+        super().on_init()
+        self.docs = Documents()
+        self.docs.get_all_documents()
+        self.log_info("Я блюдо, и я рад этому!")
+
+    def start_execution(self):
+        self.log_info(f"Начинаю свое приготовление по карточке {self.dish_card}")
+        self.card_id = self.dish_card["card_id"]
+        self.dish_name = self.dish_card["dish_name"]
+        self.card_descr = self.dish_card["card_descr"]
+        self.card_time = self.dish_card["card_time"]
+        self.log_info(f"Я представляю \"{self.dish_name}\" по описанию я \"{self.card_descr}\"!")
+        self.log_info(f"Приступаю к созданию процесса!")
+        process = run_agent(f"Process:{self.name}", base=Process)
+
+
+        pass
 
     def destroy(self):
         """
