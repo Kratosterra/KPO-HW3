@@ -61,7 +61,8 @@ class Process(Agent):
         for oper in self.operations:
             operation = run_agent(f"Operation:{self.name}:{num_oper}", base=Operation)
             num_oper += 1
-
+            operation.execute()
+            self.proc_operations.append(dict(proc_oper=self.proc_id * self.ord_dish))
         self.proc_ended = str(datetime.datetime.utcnow())
         log = ProcessLog()
         log.log_process(dict(proc_id=self.proc_id, ord_dish=self.ord_dish, proc_started=self.proc_started,

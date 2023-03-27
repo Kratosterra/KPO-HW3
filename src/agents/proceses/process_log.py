@@ -1,8 +1,5 @@
 import json
 
-from osbrain import Agent
-
-
 class ProcessLog:
     logs: []
 

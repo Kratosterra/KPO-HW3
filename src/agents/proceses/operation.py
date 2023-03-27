@@ -37,8 +37,9 @@ class Operation(Agent):
         super().on_init()
         self.log_info("Собираюсь пооперировать!")
 
-    def reserve_cooker_and_equipment(self):
+    def execute(self):
         """
-        Запрашивает у управляющего агента повара и оборудование
+        Исполняет операцию
         """
+        self.log_info("Операция выполнена!")
         pass
