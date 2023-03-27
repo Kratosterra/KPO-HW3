@@ -53,6 +53,9 @@ class Visitor(Agent):
             f"Посетитель {self.vis_name} прибыл в {self.vis_ord_started} и хочет заказать {self.vis_ord_dishes} на сумму {self.vis_ord_total}!")
 
     def begin_make_order(self):
+        """
+        Начинает исполнение заказа
+        """
         # Просим меню у управляющего агента
         self.log_info("Прошу управляющего агента предоставить меню!")
         self.ask_for_menu()
@@ -65,6 +68,9 @@ class Visitor(Agent):
         self.send(self.addr(str(self.name)), message=f'Order {str(self.name)} {order}')
 
     def on_reply_from_supervisor(self, message):
+        """
+        Отвечает на запросы от менеджера
+        """
         now_order = []
         command_list = message.split()
         if command_list[0] == "Неизвестный":
@@ -102,4 +108,7 @@ class Visitor(Agent):
             self.log_info("Неизвестно")
 
     def ask_for_menu(self):
+        """
+        Запрашивает меню у менеджера
+        """
         self.send(self.addr(str(self.name)), message=f'Menu {str(self.name)}')

@@ -14,6 +14,10 @@ class ProcessLog:
         self.logs = data
 
     def log_process(self, agent):
+        """
+        Записывает данные в лог
+        :param agent: представление агента в словаре
+        """
         self.logs["process_log"].append(agent)
 
         with open('log/operation_log.json', 'w') as f:

@@ -31,12 +31,18 @@ class Dish(Agent):
         super().__init__(name, host, serializer, transport, attributes)
 
     def on_init(self):
+        """
+        Занимается получением документов и восстановлением данных агента после создания
+        """
         super().on_init()
         self.docs = Documents()
         self.docs.get_all_documents()
         self.log_info("Я блюдо, и я рад этому!")
 
     def start_execution(self):
+        """
+        Начинает изготовление блюда
+        """
         self.log_info(f"Начинаю свое приготовление по карточке {self.dish_card}")
         self.card_id = self.dish_card["card_id"]
         self.dish_name = self.dish_card["dish_name"]

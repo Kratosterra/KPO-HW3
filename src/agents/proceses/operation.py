@@ -31,8 +31,12 @@ class Operation(Agent):
         super().__init__(name, host, serializer, transport, attributes)
 
     def on_init(self):
+        """
+        Занимается получением документов и восстановлением данных агента после создания
+        """
         super().on_init()
         self.log_info("Собираюсь пооперировать!")
+
     def reserve_cooker_and_equipment(self):
         """
         Запрашивает у управляющего агента повара и оборудование

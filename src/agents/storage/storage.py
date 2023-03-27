@@ -34,7 +34,6 @@ class Storage(Agent):
     def check_product(self, product, mass):
         """
         Проверяет есть ли в наличии требуемый объем продукта.
-        Создает объект продукта, если такой объем присутствует.
         :param product: Продукт в виде id в складе
         :param mass: Обьем продукта
         :return: True если есть, False, если нет

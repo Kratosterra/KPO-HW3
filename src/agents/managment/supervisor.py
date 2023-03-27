@@ -89,9 +89,17 @@ class Supervisor(Agent):
         return
 
     def on_message(self, message):
+        """
+        Обрабатывает сообщения
+        :param message: сообщение
+        """
         self.log_info('Получил сообщение: %s' % message)
 
     def on_message_from_visitor(self, message):
+        """
+        Обрабатывает сообщения от посетителей
+        :param message: сообщение
+        """
         self.log_info('Получил от посетителя: %s' % message)
 
         command_list = message.split()
@@ -131,9 +139,17 @@ class Supervisor(Agent):
             self.send(self.addr('supervisor'), f"{command_list[1]} Команда не распознана!")
 
     def on_message_from_order(self, message):
+        """
+        Обрабатывает сообщение от заказа
+        :param message: сообщение
+        """
         self.log_info('Получил от заказа: %s' % message)
 
     def on_message_from_equipment(self, message):
+        """
+        Обрабатывает сообщение от оборудования
+        :param message: сообщение
+        """
         self.log_info('Получил от оборудования: %s' % message)
 
     def destroy_all_agents(self):
