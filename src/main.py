@@ -14,10 +14,6 @@ if __name__ == '__main__':
     server = run_nameserver()
     # Запуск супервайзера
     agent = run_agent("Supervisor", base=Supervisor, safe=False)
-
     time.sleep(20)
-    print("Это наши герои слева(сверху) на право(вниз): ")
-    for alias in server.agents():
-        print(alias)
     # Отключаем систему
     server.shutdown(200)

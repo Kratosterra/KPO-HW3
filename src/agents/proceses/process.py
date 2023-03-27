@@ -1,4 +1,9 @@
-from osbrain import Agent
+import datetime
+
+from agents.managment.working_documents import Documents
+from agents.proceses.operation import Operation
+from agents.proceses.process_log import ProcessLog
+from osbrain import Agent, run_agent
 
 
 class Process(Agent):
@@ -16,17 +21,18 @@ class Process(Agent):
     которые представляют соответствующие агенты продуктов.
     """
 
-    # ID процесса
     proc_id = 0
-    # ID блюда
-    ord_dish = 0
+    # Документы
+    docs = ""
     # Время начала процесса
     proc_started = ""
+    ord_dish = 0
     # Время окончания процесса
     proc_ended = ""
     # Активен ли процесс
     proc_active = False,
     # Операции для выполнения процесса
+    operations = []
     proc_operations = []
     # Повара
     cookers = []
@@ -39,10 +45,22 @@ class Process(Agent):
 
     def on_init(self):
         super().on_init()
+        self.docs = Documents()
+        self.docs.get_all_documents()
         self.log_info(f"Приветики, я тут попроцесирую!")
 
     def execute_operations(self):
         """
         Выполняет операции по приготовлению блюда
         """
-        pass
+        self.log_info(f"Начинаю исполнение операций {self.operations}!")
+        num_oper = 1
+        for oper in self.operations:
+            operation = run_agent(f"Operation:{self.name}:{num_oper}", base=Operation)
+            num_oper += 1
+
+        self.proc_ended = str(datetime.datetime.utcnow())
+        log = ProcessLog()
+        log.log_process(dict(proc_id=self.proc_id, ord_dish=self.ord_dish, proc_started=self.proc_started,
+                             proc_ended=self.proc_ended, proc_active=self.proc_active,
+                             proc_operations=self.proc_operations))

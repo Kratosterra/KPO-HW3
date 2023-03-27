@@ -13,8 +13,8 @@ class ProcessLog:
 
         self.logs = data
 
-    def log_process(self, agent: Agent):
-        self.logs.append(agent)
+    def log_process(self, agent):
+        self.logs["process_log"].append(agent)
 
         with open('log/operation_log.json', 'w') as f:
             json.dump(self.logs, f)

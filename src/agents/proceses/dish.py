@@ -1,8 +1,9 @@
-from osbrain import Agent, run_agent
+import datetime
 
 from agents.managment.working_documents import Documents
-
 from agents.proceses.process import Process
+from osbrain import Agent, run_agent
+
 
 class Dish(Agent):
     """
@@ -42,14 +43,11 @@ class Dish(Agent):
         self.card_descr = self.dish_card["card_descr"]
         self.card_time = self.dish_card["card_time"]
         self.log_info(f"Я представляю \"{self.dish_name}\" по описанию я \"{self.card_descr}\"!")
-        self.log_info(f"Приступаю к созданию процесса!")
+        self.log_info(f"Приступаю к созданию процесса который займет {self.card_time} минут!")
         process = run_agent(f"Process:{self.name}", base=Process)
-
-
-        pass
-
-    def destroy(self):
-        """
-        Разрушает себя при соблюдении is_completed
-        """
-        pass
+        process.set_attr(operations=self.dish_card["operations"])
+        process.set_attr(proc_started=str(datetime.datetime.utcnow()))
+        process.set_attr(ord_dish=int(self.name[12:-2]) * int(self.name[-1:]) * 11)
+        process.set_attr(proc_id=int(self.name[12:-2]) * int(self.name[-1:]))
+        self.log_info(f"Начинаю исполнение процесса!")
+        process.execute_operations()
